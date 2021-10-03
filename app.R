@@ -15,7 +15,7 @@ template_list <- list.files(path = "templates") %>%
 
 
 
-# Define UI for application that draws a histogram
+# Define UI 
 ui <- fluidPage(
 
     # Application title
@@ -42,16 +42,25 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    })
+    
+    
+    
+        inpts <- reactive({
+            name <- file.path("templates", paste0(input$template, ".R"))
+            source(name, local=TRUE)
+            mget(ls())
+            #source(file = here::here("templates",paste0(input$template,".R")))
+            #paste0(text1, " reading file ", input$template)
+        })
+    
+        output$templateout <- renderText({
+            
+            o <- inpts()
+            o$text1
+        })
 }
+
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)
