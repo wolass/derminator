@@ -51,11 +51,20 @@ ui <- fluidPage(
                         label = "Welche Pflegeprodukt?",
                         choices = c("Excipial U10 Lipolotio",
                                     "Cetaphil® Feuchtigkeitscreme",
+                                    "5% Polidocanol in Mischsalbe und Basiscreme DAC",
                                     "")),
             radioButtons(inputId = "Abschluss",
                          label = "Abschluss ?",
                          choices = c("nein","ja")),
-            
+            radioButtons(inputId = "Ciclosporin",
+                         label = "Ciclosporin sine effectu ?",
+                         choices = c("nein","ja")),
+            textInput(inputId = "Wochen_zu_Verbesserung",
+                      label = "Wochen zu Verbesserung"),
+            textInput(inputId = "good_since",
+                      label = "IGA 1 seit wieviel Wochen?"),
+            textInput(inputId = "BSA",
+                      label = "BSA %"),
             
         ),
         # Show Generated text in the main window
@@ -72,12 +81,20 @@ server <- function(input, output) {
             source(name, local=TRUE) # source it retaining the text inside
             mget(ls()) # needed for retention 
         })
-    
+        empf <- reactive({ # start a rective env
+            name <- file.path("empfehlung.R") # pick a file based on input selection
+            source(name, local=TRUE) # source it retaining the text inside
+            mget(ls()) # needed for retention 
+        })
+          
+          
         output$templateout <- renderUI({ # render text output 
             o <- inpts() # store the generated text from the sourced file in obj
+            e <- empf()
             HTML(paste0(
                 start,
                 o$text1,
+                e$text2,
                 "<p>&nbsp;</p><p>&nbsp;</p>",
                  sign)) # output the generated text from the sourced template
         })

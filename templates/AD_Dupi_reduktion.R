@@ -1,6 +1,6 @@
-text1 <- paste0("<p><strong>Diagnose:</strong> atopische Dermatitis",
+text1 <- paste0("<p><strong>Diagnose:</strong> atopische Dermatitis</p>",
                 ifelse(input$asthma=="ja",
-                       "<br>Asthma bronchiale</p>","</p>"),
+                       "<p>allergisches Asthma</p>",""),
                 "<p><strong>Zusammenfassende Beurteilung:</strong></p>",
                 ifelse(input$bekannt=="ja",
                        "<p>Die ausführliche Anamnese des Patienten bitten wir 
@@ -25,11 +25,10 @@ text1 <- paste0("<p><strong>Diagnose:</strong> atopische Dermatitis",
                 input$interval,
                 " Wochen sowie topische Therapie mit ",
                 input$TCS_basis,
-                " bei Bedarf und Hyaluronhaltige Augentropfen 5 x tägl. 
+                " Creme bei Bedarf und Hyaluronhaltige Augentropfen 5 x tägl. 
                 Zur Pflege ",
                 input$Pflege,
-                " mehrmals täglich. ",
-                ifelse(input$Abschluss!="ja","Wir bitten um vierteljährige Kontrollen in 
-                unserem Zentrum (AD Sprechstunde – montags ab 14:00). ",""), 
-                "Bei Fragen stehen wir gerne zur Verfügung.</p>"
+                " mehrmals täglich. Wir bitten um vierteljährige Kontrollen in 
+                unserem Zentrum (AD Sprechstunde – montags ab 14:00). 
+                Bei Fragen stehen wir gerne zur Verfügung.</p>"
 )
