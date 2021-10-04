@@ -8,19 +8,18 @@
 
 library(shiny)
 library(tidyverse)
+library(lubridate)
 
 ### Load the templates
 template_list <- list.files(path = "templates") %>% 
     gsub(pattern = ".R", replacement = "")
 
-
+source(here::here("templates/signature.R")) # Load the signature
 
 # Define UI 
 ui <- fluidPage(
-
     # Application title
     titlePanel("Derma Template App"),
-
     # Sidebar with a list of inputs 
     sidebarLayout(
         sidebarPanel(
@@ -29,38 +28,51 @@ ui <- fluidPage(
                         choices = c(
                             template_list
                         )
-            )
+            ),
+            radioButtons(inputId = "asthma",
+                         label = "ND Asthma?",
+                        choices = c("ja","nein")),
+            radioButtons(inputId = "bekannt",
+                         label = "Bekannter Pat.?",
+                         choices = c("ja","nein")),
+            dateInput(inputId = "einleitungDupi",
+                      label = "Einleitung Dupi Datum",
+                      format = "d.m.yyyy"),
+            dateInput(inputId = "reduktion",
+                      label = "seit wann Dupi Reduktion?",
+                      format = "d.m.yyyy"),
+            textInput(inputId = "interval",
+                      label = "Spritzen interval in Wochen"),
+            selectInput(inputId = "TCS_basis",
+                      label = "Welche TCS als Basis-Tx?",
+                      choices = c("Advantan 0,1% Creme",
+                                  "")),
+            selectInput(inputId = "Pflege",
+                        label = "Welche Pflegeprodukt?",
+                        choices = c("Excipial U10 Lipolotio",
+                                    ""))
             
         ),
-
         # Show Generated text in the main window
         mainPanel(
-           textOutput("templateout")
+           htmlOutput("templateout")
         )
     )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic required to generate text based on template
 server <- function(input, output) {
-    
-    
-    
-        inpts <- reactive({
-            name <- file.path("templates", paste0(input$template, ".R"))
-            source(name, local=TRUE)
-            mget(ls())
-            #source(file = here::here("templates",paste0(input$template,".R")))
-            #paste0(text1, " reading file ", input$template)
+        inpts <- reactive({ # start a rective env
+            name <- file.path("templates", paste0(input$template, ".R")) # pick a file based on input selection
+            source(name, local=TRUE) # source it retaining the text inside
+            mget(ls()) # needed for retention 
         })
     
-        output$templateout <- renderText({
-            
-            o <- inpts()
-            o$text1
+        output$templateout <- renderUI({ # render text output 
+            o <- inpts() # store the generated text from the sourced file in obj
+            HTML(paste0(o$text1,
+                 sign)) # output the generated text from the sourced template
         })
 }
-
-
-
 # Run the application 
 shinyApp(ui = ui, server = server)
