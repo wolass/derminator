@@ -8,13 +8,13 @@
 
 library(shiny)
 library(tidyverse)
-library(lubridate)
 
 ### Load the templates
 template_list <- list.files(path = "templates") %>% 
     gsub(pattern = ".R", replacement = "")
 
-source(here::here("templates/signature.R")) # Load the signature
+source(here::here("signature.R")) # Load the signature
+source(here::here("start.R"))
 
 # Define UI 
 ui <- fluidPage(
@@ -70,7 +70,9 @@ server <- function(input, output) {
     
         output$templateout <- renderUI({ # render text output 
             o <- inpts() # store the generated text from the sourced file in obj
-            HTML(paste0(o$text1,
+            HTML(paste0(
+                start,
+                o$text1,
                  sign)) # output the generated text from the sourced template
         })
 }
