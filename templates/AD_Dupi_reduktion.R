@@ -25,10 +25,11 @@ text1 <- paste0("<p><strong>Diagnose:</strong> atopische Dermatitis</p>",
                 input$interval,
                 " Wochen sowie topische Therapie mit ",
                 input$TCS_basis,
-                " Creme bei Bedarf und Hyaluronhaltige Augentropfen 5 x tägl. 
+                " bei Bedarf und Hyaluronhaltige Augentropfen 5 x tägl. 
                 Zur Pflege ",
                 input$Pflege,
-                " mehrmals täglich. Wir bitten um vierteljährige Kontrollen in 
-                unserem Zentrum (AD Sprechstunde – montags ab 14:00). 
-                Bei Fragen stehen wir gerne zur Verfügung.</p>"
+                " mehrmals täglich. ",
+                ifelse(input$Abschluss!="ja","Wir bitten um vierteljährige Kontrollen in 
+                unserem Zentrum (AD Sprechstunde – montags ab 14:00). ",""), 
+                "Bei Fragen stehen wir gerne zur Verfügung.</p>"
 )

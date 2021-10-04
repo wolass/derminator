@@ -50,7 +50,12 @@ ui <- fluidPage(
             selectInput(inputId = "Pflege",
                         label = "Welche Pflegeprodukt?",
                         choices = c("Excipial U10 Lipolotio",
-                                    ""))
+                                    "Cetaphil® Feuchtigkeitscreme",
+                                    "")),
+            radioButtons(inputId = "Abschluss",
+                         label = "Abschluss ?",
+                         choices = c("nein","ja")),
+            
             
         ),
         # Show Generated text in the main window
