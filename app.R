@@ -78,6 +78,7 @@ server <- function(input, output) {
             HTML(paste0(
                 start,
                 o$text1,
+                "<p>&nbsp;</p><p>&nbsp;</p>",
                  sign)) # output the generated text from the sourced template
         })
 }

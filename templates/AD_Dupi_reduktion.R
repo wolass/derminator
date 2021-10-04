@@ -1,6 +1,6 @@
-text1 <- paste0("<p><strong>Diagnose:</strong> atopische Dermatitis</p>",
+text1 <- paste0("<p><strong>Diagnose:</strong> atopische Dermatitis",
                 ifelse(input$asthma=="ja",
-                       "<p>allergisches Asthma</p>",""),
+                       "<br>Asthma bronchiale</p>","</p>"),
                 "<p><strong>Zusammenfassende Beurteilung:</strong></p>",
                 ifelse(input$bekannt=="ja",
                        "<p>Die ausführliche Anamnese des Patienten bitten wir 
